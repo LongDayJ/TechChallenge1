@@ -6,28 +6,27 @@ import os
 app = FastAPI(title="API dos dados da EMBRAPA")
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
-print(f"Link da API: http://localhost:8000/docs")
 
 def listar_csvs():
     return [f for f in os.listdir(DATA_DIR) if f.endswith(".csv")]
 
-@app.get("/arquivos", summary="Lista os arquivos CSV disponíveis")
-def get_arquivos():
-    return {"arquivos": listar_csvs()}
+# @app.get("/arquivos", summary="Lista os arquivos CSV disponíveis")
+# def get_arquivos():
+#     return {"arquivos": listar_csvs()}
 
 
-@app.get("/dados/{arquivo}", summary="Retorna os dados de um arquivo CSV")
-def get_dados_arquivo(arquivo: str):
-    if not arquivo.endswith(".csv"):
-        arquivo += ".csv"
-    caminho = os.path.join(DATA_DIR, arquivo)
-    if not os.path.isfile(caminho):
-        raise HTTPException(status_code=404, detail="Arquivo não encontrado")
-    try:
-        df = pd.read_csv(caminho)
-        return JSONResponse(content=df.to_dict(orient="records"))
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Erro ao ler o arquivo: {str(e)}")
+# @app.get("/dados/{arquivo}", summary="Retorna os dados de um arquivo CSV")
+# def get_dados_arquivo(arquivo: str):
+#     if not arquivo.endswith(".csv"):
+#         arquivo += ".csv"
+#     caminho = os.path.join(DATA_DIR, arquivo)
+#     if not os.path.isfile(caminho):
+#         raise HTTPException(status_code=404, detail="Arquivo não encontrado")
+#     try:
+#         df = pd.read_csv(caminho)
+#         return JSONResponse(content=df.to_dict(orient="records"))
+#     except Exception as e:
+#         raise HTTPException(status_code=500, detail=f"Erro ao ler o arquivo: {str(e)}")
 
 
 def criar_endpoint(nome_arquivo):
@@ -71,7 +70,6 @@ def criar_endpoint(nome_arquivo):
                         col for col in df.columns if not col.strip().isdigit()
                     ]
                     for col_id in colunas_id:
-                        # Filtro de produto
                         if col_id.lower() == "produto" and "produto" in filtros:
                             valor_produto = filtros["produto"].strip().lower()
                             df = df[
