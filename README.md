@@ -16,3 +16,5 @@ Este projeto se trata de uma API REST utilizando FastAPI, permitindo acessar os 
 Acesse a documentação interativa em: http://localhost:8000/docs
 
 Link do repositório: https://github.com/LongDayJ/TechChallenge1
+
+não consegui utilizar o jwt por questões de tempo, vou tentar arrumar
